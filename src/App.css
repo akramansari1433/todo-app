@@ -10,3 +10,19 @@
    display: flex;
    justify-content: center;
 }
+
+.box {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   max-width: 300px;
+   margin: auto;
+   border: 2px solid black;
+   border-radius: 10px;
+   padding: 40px 20px;
+}
+
+.inputRounded .MuiOutlinedInput-root {
+   border-radius: 20px;
+}
