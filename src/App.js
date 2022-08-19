@@ -1,22 +1,24 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./components/Login";
-import Navbar from "./components/Navbar";
-import Register from "./components/Register";
-import TodoList from "./components/TodoList";
+import Login from "./pages/Login";
+import Navbar from "./components/Navbar/Navbar";
+import Register from "./pages/Register";
 import { useState } from "react";
+import Home from "./pages/Home";
 
 function App() {
-   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+   const [user, setUser] = useState(
+      JSON.parse(window.localStorage.getItem("user"))
+   );
    return (
       <BrowserRouter>
-         <Navbar userId={userId} setUserId={setUserId} />
+         <Navbar user={user} setUser={setUser} />
          <Routes>
             <Route
                exact
                path="/login"
                element={
-                  userId ? <Navigate to="/" /> : <Login setUserId={setUserId} />
+                  user ? <Navigate to="/" /> : <Login setUser={setUser} />
                }
             />
             <Route exact path="/register" element={<Register />} />
@@ -24,8 +26,8 @@ function App() {
                exact
                path="/"
                element={
-                  userId ? (
-                     <TodoList userId={userId} />
+                  user ? (
+                     <Home userId={user.userId} />
                   ) : (
                      <Navigate to="/login" />
                   )

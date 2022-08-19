@@ -2,25 +2,26 @@ import { Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 
-export default function Login({ setUserId }) {
+export default function Login({ setUser }) {
    const [email, setEmail] = useState();
    const [password, setPassword] = useState();
+   const [error, setError] = useState();
 
    const handleSubmit = (e) => {
       e.preventDefault();
       axios
          .post("http://localhost:3000/signin", { email, password })
          .then((res) => {
-            if (res.data.message) {
-               window.localStorage.setItem("userId", res.data.userId);
-               setUserId(window.localStorage.getItem("userId"));
-               console.log(res.data.message);
+            if (res.data) {
+               window.localStorage.setItem("user", JSON.stringify(res.data));
+               setUser(JSON.parse(window.localStorage.getItem("user")));
+               setError("");
             }
          })
-         .catch((error) => {
-            console.log(error);
+         .catch((err) => {
+            setError(err.response.data.error);
+            console.log(err);
          });
-      e.target.reset();
    };
 
    return (
@@ -48,6 +49,9 @@ export default function Login({ setUserId }) {
             <Button variant="contained" type="submit">
                Login
             </Button>
+            <Typography mt={2} color="error">
+               {error}
+            </Typography>
          </form>
       </div>
    );
