@@ -14,7 +14,7 @@ export default function Navbar({ user, setUser }) {
 
    return (
       <Box sx={{ flexGrow: 1 }}>
-         <AppBar position="static">
+         <AppBar position="static" color="inherit">
             <Toolbar>
                <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                   Todo App
@@ -34,10 +34,10 @@ export default function Navbar({ user, setUser }) {
                   </>
                ) : (
                   <>
-                     <Button color="inherit" component={Link} to="/login">
+                     <Button color="primary" component={Link} to="/login">
                         Login
                      </Button>
-                     <Button color="inherit" component={Link} to="/register">
+                     <Button color="primary" component={Link} to="/register">
                         Register
                      </Button>
                   </>
