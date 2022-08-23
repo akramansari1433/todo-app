@@ -17,10 +17,12 @@ const style = {
 };
 
 export default function Register() {
-   const [name, setName] = useState();
-   const [email, setEmail] = useState();
-   const [password, setPassword] = useState();
-   const [confirmPassword, setConfirmPassword] = useState();
+   const [userData, setUserData] = useState({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+   });
 
    const [response, setResponse] = useState();
    const [error, setError] = useState();
@@ -31,16 +33,24 @@ export default function Register() {
 
    const navigate = useNavigate();
 
+   const handleChange = (e) => {
+      const { name, value } = e.target;
+      setUserData((prevState) => ({
+         ...prevState,
+         [name]: value,
+      }));
+   };
+
    const handleSubmit = (e) => {
       e.preventDefault();
-      if (password !== confirmPassword) {
+      if (userData.password !== userData.confirmPassword) {
          setError("Password must be same!");
       } else {
          axios
             .post("http://localhost:3000/register", {
-               email,
-               password,
-               name,
+               name: userData.name,
+               email: userData.email,
+               password: userData.password,
             })
             .then((res) => {
                if (res.data.message) {
@@ -64,34 +74,38 @@ export default function Register() {
             <TextField
                label="Name"
                type="text"
+               name="name"
                required
                fullWidth
                sx={{ marginBottom: 3 }}
-               onChange={(e) => setName(e.target.value)}
+               onChange={handleChange}
             />
             <TextField
                label="Email"
                type="email"
+               name="email"
                required
                fullWidth
                sx={{ marginBottom: 3 }}
-               onChange={(e) => setEmail(e.target.value)}
+               onChange={handleChange}
             />
             <TextField
                label="Password"
                type="password"
+               name="password"
                required
                fullWidth
                sx={{ marginBottom: 3 }}
-               onChange={(e) => setPassword(e.target.value)}
+               onChange={handleChange}
             />
             <TextField
                label="Confirm Password"
                type="password"
+               name="confirmPassword"
                required
                fullWidth
                sx={{ marginBottom: 3 }}
-               onChange={(e) => setConfirmPassword(e.target.value)}
+               onChange={handleChange}
             />
             <Button variant="contained" type="submit">
                Register

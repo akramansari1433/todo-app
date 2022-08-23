@@ -55,13 +55,13 @@ export default function Task({ t }) {
             checked={t.completed === 1}
             onChange={(e) => handleCheck(e, t.tid)}
          />
-         {t.completed ? (
-            <Typography variant="h5" sx={{ textDecoration: "line-through" }}>
-               {t.tname}
-            </Typography>
-         ) : (
-            <Typography variant="h5">{t.tname}</Typography>
-         )}
+
+         <Typography
+            variant="h5"
+            sx={{ textDecoration: t.completed && "line-through" }}
+         >
+            {t.tname}
+         </Typography>
 
          <IconButton color="error" onClick={() => deleteTask(t.tid)}>
             <DeleteIcon fontSize="medium" />

@@ -3,14 +3,22 @@ import axios from "axios";
 import React, { useState } from "react";
 
 export default function Login({ setUser }) {
-   const [email, setEmail] = useState();
-   const [password, setPassword] = useState();
+   const [loginCred, setLoginCred] = useState({ email: "", password: "" });
+
    const [error, setError] = useState();
+
+   const handleChange = (e) => {
+      const { name, value } = e.target;
+      setLoginCred((prevState) => ({
+         ...prevState,
+         [name]: value,
+      }));
+   };
 
    const handleSubmit = (e) => {
       e.preventDefault();
       axios
-         .post("http://localhost:3000/signin", { email, password })
+         .post("http://localhost:3000/signin", loginCred)
          .then((res) => {
             if (res.data) {
                window.localStorage.setItem("user", JSON.stringify(res.data));
@@ -33,17 +41,19 @@ export default function Login({ setUser }) {
             <TextField
                label="Email"
                type="email"
+               name="email"
                required
                fullWidth
-               onChange={(e) => setEmail(e.target.value)}
+               onChange={handleChange}
                sx={{ marginBottom: 3 }}
             />
             <TextField
                label="Password"
                type="password"
+               name="password"
                required
                fullWidth
-               onChange={(e) => setPassword(e.target.value)}
+               onChange={handleChange}
                sx={{ marginBottom: 3 }}
             />
             <Button variant="contained" type="submit">

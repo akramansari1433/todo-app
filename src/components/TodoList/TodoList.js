@@ -6,7 +6,7 @@ import Task from "../Task/Task";
 import "./TodoList.css";
 
 export default function TodoList({ userId }) {
-   const [tasks, setTasks] = useState([]);
+   const [userTasks, setUserTasks] = useState([]);
    const [task, setTask] = useState({ tname: "", userId: "" });
 
    const handleAddTask = (e) => {
@@ -28,7 +28,7 @@ export default function TodoList({ userId }) {
       axios
          .get(`http://localhost:3000/getalltask/${userId}`)
          .then((res) => {
-            setTasks(res.data);
+            setUserTasks(res.data);
          })
          .catch((error) => {
             console.log(error);
@@ -62,7 +62,7 @@ export default function TodoList({ userId }) {
                   </IconButton>
                </form>
 
-               {tasks.map((t) => (
+               {userTasks.map((t) => (
                   <Task t={t} key={t.tid} />
                ))}
             </Paper>
