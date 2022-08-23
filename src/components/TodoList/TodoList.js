@@ -1,22 +1,21 @@
 import { Box, IconButton, Paper, TextField, Typography } from "@mui/material";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Task from "../Task/Task";
 import "./TodoList.css";
+import { addTask, getAllTask } from "../../helper";
 
 export default function TodoList({ userId }) {
    const [userTasks, setUserTasks] = useState([]);
    const [task, setTask] = useState({ tname: "", userId: "" });
 
    const handleAddTask = (e) => {
-      axios
-         .post("http://localhost:3000/addtask", {
-            tname: task.tname,
-            userId: userId,
-         })
+      addTask({
+         tname: task.tname,
+         userId: userId,
+      })
          .then((res) => {
-            console.log(res.data);
+            console.log(res);
          })
          .catch((error) => {
             console.log(error);
@@ -25,10 +24,9 @@ export default function TodoList({ userId }) {
    };
 
    useEffect(() => {
-      axios
-         .get(`http://localhost:3000/getalltask/${userId}`)
+      getAllTask(userId)
          .then((res) => {
-            setUserTasks(res.data);
+            setUserTasks(res);
          })
          .catch((error) => {
             console.log(error);

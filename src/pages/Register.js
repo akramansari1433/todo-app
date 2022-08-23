@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
+import { register } from "../helper";
 
 const style = {
    position: "absolute",
@@ -41,16 +41,15 @@ export default function Register() {
       if (userData.password !== userData.confirmPassword) {
          setError("Password must be same!");
       } else {
-         axios
-            .post("http://localhost:3000/register", {
-               name: userData.name,
-               email: userData.email,
-               password: userData.password,
-            })
+         register({
+            name: userData.name,
+            email: userData.email,
+            password: userData.password,
+         })
             .then((res) => {
-               if (res.data.message) {
+               if (res.message) {
                   handleOpen();
-                  setResponse(res.data.message);
+                  setResponse(res.message);
                }
             })
             .catch((err) => {

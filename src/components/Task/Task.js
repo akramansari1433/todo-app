@@ -1,14 +1,13 @@
 import { Box, Checkbox, IconButton, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
-import axios from "axios";
+import { deleteUserTask, markcompleted, markInCompleted } from "../../helper";
 
 export default function Task({ t }) {
    const deleteTask = (tid) => {
-      axios
-         .delete(`http://localhost:3000/task/${tid}`)
+      deleteUserTask(tid)
          .then((res) => {
-            console.log(res.data);
+            console.log(res);
             window.location.reload();
          })
          .catch((error) => {
@@ -18,20 +17,18 @@ export default function Task({ t }) {
 
    const handleCheck = (e, tid) => {
       if (e.target.checked) {
-         axios
-            .post(`http://localhost:3000/markcompleted/${tid}`)
+         markcompleted(tid)
             .then((res) => {
-               console.log(res.data);
+               console.log(res);
                window.location.reload();
             })
             .catch((error) => {
                console.log(error);
             });
       } else {
-         axios
-            .post(`http://localhost:3000/markincompleted/${tid}`)
+         markInCompleted(tid)
             .then((res) => {
-               console.log(res.data);
+               console.log(res);
                window.location.reload();
             })
             .catch((error) => {

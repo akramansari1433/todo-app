@@ -1,10 +1,9 @@
 import { Button, TextField, Typography } from "@mui/material";
-import axios from "axios";
 import React, { useState } from "react";
+import { login } from "../helper";
 
 export default function Login({ setUser }) {
    const [loginCred, setLoginCred] = useState();
-
    const [error, setError] = useState();
 
    const handleChange = (e) => {
@@ -17,14 +16,11 @@ export default function Login({ setUser }) {
 
    const handleSubmit = (e) => {
       e.preventDefault();
-      axios
-         .post("http://localhost:3000/signin", loginCred)
+      login(loginCred)
          .then((res) => {
-            if (res.data) {
-               window.localStorage.setItem("user", JSON.stringify(res.data));
-               setUser(JSON.parse(window.localStorage.getItem("user")));
-               setError("");
-            }
+            window.localStorage.setItem("user", JSON.stringify(res));
+            setUser(JSON.parse(window.localStorage.getItem("user")));
+            setError("");
          })
          .catch((err) => {
             setError(err.response.data.error);

@@ -10,6 +10,7 @@ function App() {
    const [user, setUser] = useState(
       JSON.parse(window.localStorage.getItem("user"))
    );
+
    return (
       <BrowserRouter>
          <Navbar user={user} setUser={setUser} />
