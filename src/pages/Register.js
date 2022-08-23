@@ -17,12 +17,7 @@ const style = {
 };
 
 export default function Register() {
-   const [userData, setUserData] = useState({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-   });
+   const [userData, setUserData] = useState();
 
    const [response, setResponse] = useState();
    const [error, setError] = useState();

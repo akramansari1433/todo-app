@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState } from "react";
 
 export default function Login({ setUser }) {
-   const [loginCred, setLoginCred] = useState({ email: "", password: "" });
+   const [loginCred, setLoginCred] = useState();
 
    const [error, setError] = useState();
 
